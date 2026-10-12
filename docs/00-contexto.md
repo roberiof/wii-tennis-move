@@ -29,6 +29,7 @@ A proposta original (2 de outubro de 2026) citava equipe de quatro; o acompanham
    - Sugeriu a plataforma **AirConsole**.
    - Citou um tênis de referência, "Smoots Air Tennis". **Não conseguimos confirmar** que esse jogo existe.
 3. **Acompanhamento** — [`slides/acompanhamento.pdf`](slides/acompanhamento.pdf). Resposta à crítica: um jogo de tênis com o celular como raquete; single contra CPU e multiplayer 1v1 com tela dividida. Mantido da proposta: jogo no navegador do PC, conexão por QR code ou código de sala, calibração.
+4. **Renomeação (12/out/2026)** — o projeto passa a se chamar **Wii Tennis Move** (repositório `wii-tennis-move`). Os slides da proposta e do acompanhamento ainda usam o nome anterior, "Wii Move".
 
 ## Persona
 

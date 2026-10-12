@@ -2,7 +2,7 @@
 
 ## O projeto
 
-Wii Move: jogo de tênis no navegador do PC em que o celular de cada jogador é a raquete (os sensores viram o golpe).
+Wii Tennis Move (antes "Wii Move"): jogo de tênis no navegador do PC em que o celular de cada jogador é a raquete (os sensores viram o golpe).
 Projeto da cadeira de Jogos Digitais (UFPE/CIn, 2026.2), equipe de 5, TypeScript.
 Todo o contexto está em `docs/`. Fase atual: POC de sensores (`pocs/poc-01-sensores/`).
 
