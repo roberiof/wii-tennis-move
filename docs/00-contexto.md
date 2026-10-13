@@ -17,7 +17,7 @@ Visão consolidada do projeto. Fontes: documento de handoff do POC (`CONTEXTO_PO
 | Eric Bezerra Londres Barreto | [a definir] |
 | Gabriel Ayres | [a definir] |
 | Mateus Henrique Ataide de Lima | [a definir] |
-| Tony [sobrenome a definir] | [a definir] |
+| Toni Cabral Amorim | [a definir] |
 
 A proposta original (2 de outubro de 2026) citava equipe de quatro; o acompanhamento já lista cinco.
 
