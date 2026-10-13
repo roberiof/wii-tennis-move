@@ -10,7 +10,7 @@ Projeto da cadeira de Jogos Digitais, UFPE/CIn, semestre 2026.2. O jogo roda no 
 - Eric Bezerra Londres Barreto
 - Gabriel Ayres
 - Mateus Henrique Ataide de Lima
-- Tony [sobrenome a definir]
+- Toni Cabral Amorim
 
 ## Estado atual
 
