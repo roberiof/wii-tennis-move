@@ -33,4 +33,4 @@ Depois:
 
 | POC | Pergunta | Estado |
 |---|---|---|
-| [poc-01-sensores](poc-01-sensores/) | Os sensores do celular, via AirConsole ou alternativa própria, são bons o bastante para detectar um swing de tênis? | Não iniciado |
+| [poc-01-sensores](poc-01-sensores/) | Os sensores do celular, via AirConsole ou alternativa própria, são bons o bastante para detectar um swing de tênis? | Em andamento (plano A implementado, sem medições) |

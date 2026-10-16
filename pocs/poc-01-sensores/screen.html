@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Wii Tennis Move — tela</title>
+    <script src="https://www.airconsole.com/api/airconsole-1.11.0.js"></script>
+    <style>
+      * { box-sizing: border-box; }
+      html, body { margin: 0; height: 100%; }
+      [hidden] { display: none !important; }
+      body { font: 13px system-ui, sans-serif; }
+      #toggle { position: fixed; right: 12px; bottom: 12px; z-index: 10; font: 12px system-ui, sans-serif; padding: 6px 10px;
+        border-radius: 6px; border: 1px solid #fff4; background: #0008; color: #fff; cursor: pointer; }
+
+      /* ---------- Demo ---------- */
+      #demoView { height: 100%; display: flex; flex-direction: column; color: #fff;
+        background: radial-gradient(ellipse at top, #16432f 0%, #0a1f16 70%); }
+      .demo-head { display: flex; justify-content: space-between; align-items: center; padding: 18px 28px 6px; }
+      .demo-brand { font-size: 34px; font-weight: 900; letter-spacing: -0.5px; }
+      .demo-sub { font-size: 14px; color: #a8d5bd; letter-spacing: 2px; text-transform: uppercase; }
+      .demo-code { text-align: right; }
+      .demo-code-label { font-size: 13px; color: #a8d5bd; }
+      .demo-code-value { font-size: 40px; font-weight: 900; letter-spacing: 4px; color: #e8ff3a; }
+      .demo-body { flex: 1; display: flex; gap: 18px; padding: 8px 28px 8px; min-height: 0; }
+      .demo-court-wrap { flex: 1; position: relative; min-width: 0; }
+      .demo-court { width: 100%; height: 100%; display: block; }
+      .demo-lobby { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+        font-size: 28px; font-weight: 800; text-shadow: 0 2px 8px #000a; text-align: center; pointer-events: none; }
+      .demo-lobby small { font-size: 15px; font-weight: 500; color: #d8f0e3; margin-top: 8px; }
+      .demo-players { width: 260px; display: flex; flex-direction: column; gap: 12px; overflow: auto; }
+      .pc { background: #ffffff10; border: 1px solid #ffffff1c; border-radius: 14px; padding: 14px; transition: opacity 0.3s; }
+      .pc-off { opacity: 0.35; }
+      .pc-hit { animation: hit 0.45s ease-out; }
+      @keyframes hit { 0% { transform: scale(1.06); background: #ffffff30; } 100% { transform: scale(1); } }
+      .pc-head { display: flex; align-items: center; gap: 8px; font-size: 18px; font-weight: 800; margin-bottom: 8px; }
+      .pc-dot { width: 14px; height: 14px; border-radius: 50%; }
+      .pc-row { display: flex; justify-content: space-between; font-size: 14px; margin: 4px 0; }
+      .pc-row b { font-size: 22px; }
+      .pc-small { font-size: 12px; color: #a8d5bd; }
+      .pc-last { font-size: 16px; font-weight: 800; min-height: 22px; margin: 6px 0; }
+      .pc-bar { height: 8px; border-radius: 4px; background: #ffffff1c; overflow: hidden; }
+      .pc-fill { height: 100%; width: 0; transition: width 0.2s; }
+      .demo-foot { padding: 6px 28px 12px; font-size: 12px; color: #7fae95; }
+
+      /* ---------- Medição ---------- */
+      #measureView { min-height: 100%; padding: 12px; background: #fafafa; color: #222; }
+      #measureView header { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
+      #measureView h1 { font-size: 16px; margin: 0 12px 0 0; }
+      #measureView button, #measureView input { font: inherit; padding: 4px 8px; }
+      .rec { background: #c22; color: #fff; border: 0; border-radius: 4px; }
+      .muted { color: #777; }
+      #devices { display: grid; grid-template-columns: repeat(auto-fit, minmax(480px, 1fr)); gap: 10px; }
+      .dev { background: #fff; border: 1px solid #ddd; border-radius: 6px; padding: 8px; }
+      .dev h2 { font-size: 14px; margin: 0 0 6px; display: flex; justify-content: space-between; align-items: center; }
+      .dev canvas { width: 100%; height: 110px; display: block; background: #f4f4f4; border-radius: 4px; margin-bottom: 4px; }
+      .legend span { margin-right: 10px; font-size: 12px; }
+      .dev table { border-collapse: collapse; width: 100%; margin-top: 6px; }
+      .dev td, .dev th { padding: 2px 6px; text-align: right; border-bottom: 1px solid #eee; font-variant-numeric: tabular-nums; }
+      .dev th:first-child, .dev td:first-child { text-align: left; }
+      .dead { opacity: 0.4; }
+    </style>
+  </head>
+  <body>
+    <button id="toggle">Medição</button>
+
+    <div id="demoView"></div>
+
+    <div id="measureView" hidden>
+      <header>
+        <h1>POC 01 — sensores (plano A, AirConsole)</h1>
+        <span id="code" class="muted">aguardando AirConsole…</span>
+        <span style="flex:1"></span>
+        <label>rótulo
+          <input id="label" list="labels" value="forehand" size="10" />
+          <datalist id="labels">
+            <option>parado</option><option>giro</option><option>forehand</option><option>backhand</option>
+            <option>forte</option><option>fraco</option><option>topspin</option><option>slice</option>
+            <option>lob</option><option>neutro</option>
+          </datalist>
+        </label>
+        <button id="rec">● gravar</button>
+        <span id="recInfo" class="muted">0 linhas</span>
+        <button id="export">Exportar CSV</button>
+        <button id="reset">Zerar medições</button>
+      </header>
+      <div id="devices"><p class="muted">Nenhum controle conectado.</p></div>
+    </div>
+
+    <script type="module" src="/src/screen/main.ts"></script>
+  </body>
+</html>
