@@ -1,4 +1,4 @@
-# POC 01 — Sensores e latência
+﻿# POC 01 — Sensores e latência
 
 - **Estado:** em andamento — plano A (Etapas 1, 2 e 4, AirConsole) implementado; falta medir em aparelhos. Etapa 3 (plano B) não iniciada.
 - **Semana:** S1
@@ -241,3 +241,5 @@ Se os dados forem ângulo, trocar "Rotação" para "derivada de ângulo" no celu
 ### Decisão
 
 [a definir] — atualizar o [ADR 0003](../../docs/decisoes/0003-airconsole-condicionado-ao-poc.md) e as premissas afetadas.
+
+

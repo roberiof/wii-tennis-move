@@ -57,6 +57,8 @@ let forehandSign: 1 | -1 | null = (() => {
   return v === "1" ? 1 : v === "-1" ? -1 : null;
 })();
 let calibrating = false;
+let calibratingAt = 0;
+let calibTimer: number | null = null;
 
 let derive = createRateDeriver();
 let detect = createSwingDetector(params, onSwing);
@@ -68,8 +70,14 @@ function resetDetector(): void {
 
 function onSwing(d: DetectedSwing): void {
   if (calibrating) {
+    // Ignora micro-movimentos causados pelo impacto do dedo ao apertar o botão de calibrar
+    if (d.t < calibratingAt + 350) return;
     forehandSign = d.side;
     calibrating = false;
+    if (calibTimer !== null) {
+      window.clearTimeout(calibTimer);
+      calibTimer = null;
+    }
     store(FH_KEY, String(d.side));
     renderCalib();
   }
@@ -152,6 +160,13 @@ function setNative(s: NativeState): void {
     srcSel.value = "native";
     resetDetector();
     $("native").textContent = "Sensor do celular ativo";
+  } else if (s === "blocked" || s === "denied" || s === "unsupported") {
+    // Garante fallback seguro de volta para o AirConsole
+    detSource = "airconsole";
+    srcSel.value = "airconsole";
+    resetDetector();
+    $("native").textContent = "Ativar sensor do celular";
+    window.removeEventListener("devicemotion", onNativeMotion);
   }
   sendStatus();
 }
@@ -192,9 +207,30 @@ function renderCalib(): void {
     ? "Calibrado: forehand e backhand reconhecidos."
     : "Sem calibração: o lado do golpe ainda não é reconhecido.";
 }
+
 $("calib").addEventListener("click", () => {
+  if (calibrating) {
+    // Clique adicional cancela a calibração
+    calibrating = false;
+    if (calibTimer !== null) {
+      window.clearTimeout(calibTimer);
+      calibTimer = null;
+    }
+    renderCalib();
+    return;
+  }
   calibrating = true;
+  calibratingAt = performance.now();
   renderCalib();
+
+  if (calibTimer !== null) window.clearTimeout(calibTimer);
+  calibTimer = window.setTimeout(() => {
+    if (calibrating) {
+      calibrating = false;
+      calibTimer = null;
+      renderCalib();
+    }
+  }, 8000); // 8s de timeout se o jogador não bater
 });
 renderCalib();
 

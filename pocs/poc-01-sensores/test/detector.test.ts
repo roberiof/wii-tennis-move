@@ -46,4 +46,16 @@ describe("createSwingDetector", () => {
     feed(createSwingDetector(DEFAULT_PARAMS, (s) => out.push(s)), [0, 3000, 0], "alpha");
     expect(out[0].power).toBe(1);
   });
+
+  it("finaliza o swing se estourar o timeout mesmo sem descer abaixo do limiar final", () => {
+    const out: DetectedSwing[] = [];
+    const detect = createSwingDetector({ ...DEFAULT_PARAMS, timeout: 200 }, (s) => out.push(s));
+    // Começa swing em t=0
+    detect({ alpha: 500, beta: 0, gamma: 0 }, 0);
+    // Permanece alto sem cair abaixo de end (200) até t=250ms (> timeout de 200ms)
+    detect({ alpha: 800, beta: 0, gamma: 0 }, 100);
+    detect({ alpha: 300, beta: 0, gamma: 0 }, 250);
+    expect(out).toHaveLength(1);
+    expect(out[0].peak).toBe(800);
+  });
 });

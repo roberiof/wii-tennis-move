@@ -1,4 +1,4 @@
-# 02 — Plano de projeto
+﻿# 02 — Plano de projeto
 
 ## Stack
 
@@ -99,3 +99,4 @@ Riscos adicionais levantados na revisão das premissas (ver [`04-premissas.md`](
 - https://developers.airconsole.com/best-practices
 - https://developers.airconsole.com/best-practices-for-web-games-on-airconsole
 - https://github.com/AirConsole/airconsole-api/
+

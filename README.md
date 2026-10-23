@@ -14,14 +14,15 @@ Projeto da cadeira de Jogos Digitais, UFPE/CIn, semestre 2026.2. O jogo roda no 
 
 ## Estado atual
 
-Fase de **POC de sensores** (`pocs/poc-01-sensores/`). O jogo ainda não começou. A adoção do AirConsole depende do resultado do POC (ver [ADR 0003](docs/decisoes/0003-airconsole-condicionado-ao-poc.md)).
-
-O app do POC 01 (plano A, AirConsole) já roda no simulador e no celular. Para testar, ver [Como rodar](pocs/poc-01-sensores/README.md#como-rodar).
+- **POC 01 (Sensores e Latência):** Validado em Android real (Samsung Galaxy A54). O AirConsole entrega leitura 1:1 de forehand/backhand com velocidade derivada; corrigidos bugs de timeout do detector e instabilidade com sensores nativos em iframes ([`pocs/poc-01-sensores/`](pocs/poc-01-sensores/)).
+- **Jogo — Entrega S2 Concluída ([`game/`](game/)):** Quadra 3D oficial, física da bola (gravidade, quique, rede), personagens Frutiger Aero inspirados no avatar clássico do Windows Live Messenger (WLM 2012) com raquete flutuante, movimento automático até a bola e rebatidas estilo arcade com buffer de entrada.
 
 ## Como navegar
 
 | Pasta / arquivo | Conteúdo |
 |---|---|
+| [`game/`](game/) | O jogo em Three.js (S2 concluída: quadra, física, personagens Frutiger Aero e IA) |
+| [`pocs/poc-01-sensores/`](pocs/poc-01-sensores/) | Prova de conceito de sensores e latência com resultados de medição |
 | [`docs/00-contexto.md`](docs/00-contexto.md) | Visão consolidada: projeto, equipe, prazo, feedback do professor |
 | [`docs/01-game-design.md`](docs/01-game-design.md) | Conceito, controles, swing, modos, calibração |
 | [`docs/02-plano-de-projeto.md`](docs/02-plano-de-projeto.md) | Stack, arquitetura, cronograma, riscos |
@@ -29,8 +30,6 @@ O app do POC 01 (plano A, AirConsole) já roda no simulador e no celular. Para t
 | [`docs/04-premissas.md`](docs/04-premissas.md) | Premissas P1–P14 com status e como validar |
 | [`docs/decisoes/`](docs/decisoes/) | Registros de decisão (ADR) |
 | [`docs/slides/`](docs/slides/) | Apresentações da cadeira |
-| [`pocs/`](pocs/) | Provas de conceito, uma pasta por POC |
-| [`game/`](game/) | O jogo (começa depois do POC 01) |
 | [`CLAUDE.md`](CLAUDE.md) | Instruções para agentes de IA que trabalham no repositório |
 
 ## Uso de IA

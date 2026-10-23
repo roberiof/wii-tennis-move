@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wii Tennis Move — 3D Court</title>
+    <script src="https://www.airconsole.com/api/airconsole-1.11.0.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        user-select: none;
+      }
+      body {
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        background: #bce4fc;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+      }
+      #canvas-container {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+      }
+      /* UI Overlay Frutiger Aero */
+      .ui-layer {
+        position: absolute;
+        inset: 0;
+        z-index: 10;
+        pointer-events: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 24px 32px;
+      }
+      .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .brand-badge {
+        background: rgba(255, 255, 255, 0.45);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        border-radius: 20px;
+        padding: 8px 18px;
+        color: #0b4566;
+        font-weight: 800;
+        font-size: 14px;
+        letter-spacing: 1px;
+        box-shadow: 0 8px 24px rgba(0, 120, 200, 0.15);
+      }
+      .rally-box {
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 2px solid rgba(255, 255, 255, 0.9);
+        border-radius: 28px;
+        padding: 10px 36px;
+        text-align: center;
+        box-shadow: 0 12px 32px rgba(0, 140, 220, 0.2);
+      }
+      .rally-label {
+        font-size: 12px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: #1a6b98;
+      }
+      .rally-number {
+        font-size: 48px;
+        font-weight: 900;
+        color: #064065;
+        line-height: 1;
+        margin-top: 2px;
+      }
+      .room-box {
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.85);
+        border-radius: 20px;
+        padding: 8px 20px;
+        color: #0b4566;
+        font-size: 13px;
+        font-weight: 700;
+        box-shadow: 0 8px 24px rgba(0, 120, 200, 0.15);
+      }
+      .room-code {
+        color: #0077cc;
+        font-weight: 900;
+        font-size: 16px;
+      }
+      .center-feedback {
+        text-align: center;
+        margin: auto;
+      }
+      #hit-feedback {
+        font-size: 56px;
+        font-weight: 900;
+        text-shadow: 0 4px 20px rgba(0, 0, 0, 0.18);
+        transition: transform 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28), opacity 0.35s ease;
+        opacity: 0;
+        pointer-events: none;
+      }
+      .bottom-bar {
+        display: flex;
+        justify-content: center;
+      }
+      .controls-hint {
+        background: rgba(255, 255, 255, 0.55);
+        backdrop-filter: blur(14px);
+        border: 1px solid rgba(255, 255, 255, 0.85);
+        border-radius: 20px;
+        padding: 10px 24px;
+        font-size: 13px;
+        font-weight: 700;
+        color: #0c4d72;
+        box-shadow: 0 6px 20px rgba(0, 100, 180, 0.12);
+      }
+      .key-pill {
+        background: #ffffff;
+        color: #0366a6;
+        padding: 3px 8px;
+        border-radius: 6px;
+        border: 1px solid #c8e4f8;
+        font-weight: 800;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="canvas-container"></div>
+
+    <div class="ui-layer">
+      <div class="top-bar">
+        <div class="brand-badge">WII TENNIS MOVE</div>
+        <div class="rally-box">
+          <div class="rally-label">RALLY</div>
+          <div class="rally-number" id="rally-score">0</div>
+        </div>
+        <div class="room-box">
+          Código: <span class="room-code" id="room-code">---</span>
+        </div>
+      </div>
+
+      <div class="center-feedback">
+        <div id="hit-feedback">BOM GOLPE!</div>
+      </div>
+
+      <div class="bottom-bar">
+        <div class="controls-hint" id="hint-text">
+          🎾 Celular conectado é a raquete · No PC aperte <span class="key-pill">ESPAÇO</span> para rebater
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/screen/main.ts"></script>
+  </body>
+</html>

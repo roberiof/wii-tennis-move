@@ -1,26 +1,23 @@
 # ADR 0003 — AirConsole condicionado ao POC 01
 
-- **Status:** condicionada — aguarda resultado do [POC 01](../../pocs/poc-01-sensores/README.md)
+- **Status:** aceita — validada com sucesso no POC 01 e adotada na S2
 - **Registrada em:** 2026-10-12
+- **Atualizada em:** 2026-10-22
 
 ## Contexto
 
-O professor sugeriu o AirConsole. Ele resolve conexão, código de sala, sensores e relógio sincronizado sem servidor próprio (ver [`../03-airconsole.md`](../03-airconsole.md)). Mas o SDK não lê o sensor: só repassa o que a plataforma envia, e não está verificado com que frequência nem se `alpha, beta, gamma` são velocidade ou ângulo. A API antiga recomendava 100 ms entre amostras, possivelmente pouco para um swing.
+O professor sugeriu o AirConsole. Ele resolve conexão, código de sala, sensores e relógio sincronizado sem servidor próprio (ver [`../03-airconsole.md`](../03-airconsole.md)). O POC 01 foi executado para medir a viabilidade real em celulares Android e iOS.
 
 ## Decisão
 
-- Usar o AirConsole como camada de conexão e sensores **se** passar nos critérios do POC 01 (taxa de amostras, natureza dos dados, latência, distinção de lado, iPhone e Android).
-- Se não passar, **plano B**: servidor Node com WebSocket (Socket.IO), hospedado em São Paulo, e controle por HTTPS com `DeviceMotionEvent`.
-- Em qualquer caso, a conexão fica atrás de uma interface própria (`sendSwing` / `onSwing`) desde o início.
-
-## Alternativas consideradas
-
-- **Adotar o AirConsole sem testar** — arrisca descobrir na S3 que o sensor não serve.
-- **Ir direto para o plano B** — perde sala, código, simulador e relógio prontos; ignora a sugestão do professor sem dado que justifique.
-- **AirConsole para conexão + `devicemotion` nativo no controller** — testado na etapa 2 do POC; depende de o navegador liberar o sensor dentro do iframe.
+- **Adotar o AirConsole** como camada de conexão e transporte de eventos para o jogo.
+- **Implementação do Detector no Controle:** Utilizar `onDeviceMotion` com `device_motion: 16` e rotação derivada (`angleDelta / dt`). O detector opera localmente no celular e emite apenas o evento pontual `{ type: "swing", power, side, t }` para a tela.
+- **Observações Técnicas:**
+  - Descartada a Etapa 2 (sensores nativos em iframe no Chrome Android), devido a restrições de *Permissions-Policy* do navegador.
+  - O detector inclui proteção de timeout (600 ms) para nunca travar em `inSwing = true`.
+  - A interface `sendSwing` / `onSwing` continua mantida para desacoplamento.
 
 ## Consequências
 
-- A S1 é dedicada ao POC e termina com esta decisão. Ao concluir, atualizar este ADR para `aceita` (com o caminho escolhido) ou abrir um novo ADR que o substitua.
-- A interface `sendSwing` / `onSwing` é obrigatória mesmo se o AirConsole passar, para manter o plano B barato (risco de dependência do serviço na demo).
-- Se o AirConsole for adotado: tratar anúncios da versão gratuita (`onAdShow`) e testes em rede da universidade com túnel.
+- O jogo principal foi implementado em `game/` utilizando a API do AirConsole.
+- Elimina a necessidade de hospedar e gerenciar servidores WebSocket próprios durante o semestre.
