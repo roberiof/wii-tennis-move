@@ -1,4 +1,4 @@
-# 00 — Contexto
+﻿# 00 — Contexto
 
 Visão consolidada do projeto. Fontes: documento de handoff do POC (`CONTEXTO_POC_WII_MOVE.md`, não versionado; conteúdo distribuído por `docs/`) e os slides em [`slides/`](slides/).
 
@@ -9,7 +9,7 @@ Visão consolidada do projeto. Fontes: documento de handoff do POC (`CONTEXTO_PO
 - O jogo roda **no navegador do PC**. O controle é o **celular** de cada jogador.
 - O time domina **TypeScript/JavaScript**.
 
-## Equipe
+## Equipe (5 integrantes)
 
 | Nome | Papel |
 |---|---|
@@ -17,9 +17,9 @@ Visão consolidada do projeto. Fontes: documento de handoff do POC (`CONTEXTO_PO
 | Eric Bezerra Londres Barreto | [a definir] |
 | Gabriel Ayres | [a definir] |
 | Mateus Henrique Ataide de Lima | [a definir] |
-| Tony [sobrenome a definir] | [a definir] |
+| Toni Cabral Amorim | [a definir] |
 
-A proposta original (2 de outubro de 2026) citava equipe de quatro; o acompanhamento já lista cinco.
+A proposta original (2 de outubro de 2026) citava equipe de quatro; o acompanhamento e o projeto atual já contam com a formação oficial de cinco integrantes com a entrada de Toni Cabral Amorim.
 
 ## Histórico
 
@@ -52,3 +52,4 @@ Registradas para o time resolver; não foram decididas aqui.
 | O que define a direção da jogada | "Direção: forehand ou backhand mudam o lado da jogada" | Direção pelo **timing** (adiantado = cruzada, atrasado = paralela); forehand/backhand definem o **lado** do golpe | [a definir] — `01-game-design.md` segue o documento de contexto |
 | Entrega da S1 | Conexão celular ↔ PC (sala, QR code) e detector de swing em 2 a 3 celulares | POC 01: sensores e latência, com decisão AirConsole ou plano B | [a definir] — o plano segue o documento de contexto |
 | Formato da partida | "Curto, [a definir]" | Não especificado | [a definir] |
+

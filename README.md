@@ -1,16 +1,16 @@
-# Wii Tennis Move
+﻿# Wii Tennis Move
 
 Tênis no navegador. **O celular é a raquete.**
 
 Projeto da cadeira de Jogos Digitais, UFPE/CIn, semestre 2026.2. O jogo roda no navegador do PC; cada jogador usa o próprio celular como raquete, e os sensores do celular transformam o gesto em golpe.
 
-## Equipe
+## Equipe (5 integrantes)
 
 - Antonio Robério Barreto Oliveira Filho
 - Eric Bezerra Londres Barreto
 - Gabriel Ayres
 - Mateus Henrique Ataide de Lima
-- Tony [sobrenome a definir]
+- Toni Cabral Amorim
 
 ## Estado atual
 
@@ -35,3 +35,4 @@ Projeto da cadeira de Jogos Digitais, UFPE/CIn, semestre 2026.2. O jogo roda no 
 ## Uso de IA
 
 O time usa agentes de IA no desenvolvimento. Este repositório é a fonte de contexto deles: toda decisão, premissa e resultado de POC deve estar registrado em `docs/` ou no README do POC, não só em conversas.
+
