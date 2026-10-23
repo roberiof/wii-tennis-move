@@ -16,6 +16,8 @@ Projeto da cadeira de Jogos Digitais, UFPE/CIn, semestre 2026.2. O jogo roda no 
 
 Fase de **POC de sensores** (`pocs/poc-01-sensores/`). O jogo ainda não começou. A adoção do AirConsole depende do resultado do POC (ver [ADR 0003](docs/decisoes/0003-airconsole-condicionado-ao-poc.md)).
 
+O app do POC 01 (plano A, AirConsole) já roda no simulador e no celular. Para testar, ver [Como rodar](pocs/poc-01-sensores/README.md#como-rodar).
+
 ## Como navegar
 
 | Pasta / arquivo | Conteúdo |

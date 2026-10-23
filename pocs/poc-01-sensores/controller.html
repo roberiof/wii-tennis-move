@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <title>Wii Tennis Move — raquete</title>
+    <script src="https://www.airconsole.com/api/airconsole-1.11.0.js"></script>
+    <style>
+      :root { --player: #3ec1ff; }
+      * { box-sizing: border-box; }
+      body { margin: 0; min-height: 100vh; font: 15px system-ui, sans-serif; color: #fff; background: #0e1a14; }
+      .hero { background: var(--player); color: #111; padding: 18px 16px 22px; text-align: center; transition: background 0.3s; }
+      .hero .brand { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; opacity: 0.7; }
+      .hero .name { font-size: 30px; font-weight: 800; margin-top: 4px; }
+      .hero .conn { font-size: 12px; opacity: 0.75; margin-top: 4px; }
+      .main { padding: 16px; display: grid; gap: 12px; }
+      .card { background: #18281f; border-radius: 12px; padding: 14px; text-align: center; }
+      #count { font-size: 56px; font-weight: 800; line-height: 1; }
+      .label { font-size: 12px; color: #9bb5a6; text-transform: uppercase; letter-spacing: 1px; }
+      #last { margin-top: 6px; font-size: 18px; font-weight: 700; min-height: 22px; }
+      #powerBar { height: 10px; border-radius: 5px; background: #2a3d32; margin-top: 8px; overflow: hidden; }
+      #powerFill { height: 100%; width: 0; background: var(--player); transition: width 0.15s; }
+      button { font: inherit; width: 100%; padding: 14px; border: 0; border-radius: 10px; font-weight: 700; color: #111; background: #e9f5ee; }
+      button.primary { background: var(--player); }
+      .hint { font-size: 12px; color: #9bb5a6; margin-top: 6px; }
+      details { background: #18281f; border-radius: 12px; padding: 10px 14px; }
+      summary { color: #9bb5a6; font-size: 13px; }
+      label { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin: 6px 0; font-size: 13px; }
+      select, input { font: inherit; font-size: 13px; padding: 4px; border-radius: 4px; border: 1px solid #355; background: #0e1a14; color: #fff; }
+      input { width: 80px; }
+      table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 6px; }
+      td, th { padding: 2px 4px; text-align: right; }
+      th:first-child, td:first-child { text-align: left; }
+    </style>
+  </head>
+  <body>
+    <div class="hero">
+      <div class="brand">Wii Tennis Move · raquete</div>
+      <div class="name" id="name">Conectando…</div>
+      <div class="conn" id="conn">aguardando AirConsole</div>
+    </div>
+
+    <div class="main">
+      <div class="card">
+        <div class="label">Golpes</div>
+        <div id="count">0</div>
+        <div id="last">Faça o gesto de raquetada</div>
+        <div id="powerBar"><div id="powerFill"></div></div>
+      </div>
+
+      <div class="card">
+        <button id="calib" class="primary">Calibrar: faça um forehand</button>
+        <div class="hint" id="calibState">Sem calibração: o lado do golpe ainda não é reconhecido.</div>
+      </div>
+
+      <div class="card">
+        <button id="native">Ativar sensor do celular</button>
+        <div class="hint" id="nativeState">Lê o giroscópio direto do navegador (Etapa 2).</div>
+      </div>
+
+      <details>
+        <summary>Avançado: medição</summary>
+        <table>
+          <thead><tr><th>fonte</th><th>Hz</th><th>média</th><th>máx</th><th>p95</th></tr></thead>
+          <tbody id="rates"></tbody>
+        </table>
+        <label>device_motion (ms) <select id="dm"><option>16</option><option>33</option><option>50</option><option>100</option></select></label>
+        <label>Fonte do detector <select id="detSource"><option value="airconsole">AirConsole</option><option value="native">nativo</option></select></label>
+        <label>Rotação <select id="detMode"><option value="derived">derivada de ângulo</option><option value="raw">bruta (°/s)</option></select></label>
+        <label>Limiar início (°/s) <input id="pStart" type="number" inputmode="numeric" /></label>
+        <label>Limiar fim (°/s) <input id="pEnd" type="number" inputmode="numeric" /></label>
+        <label>Pico = força 1 (°/s) <input id="pMax" type="number" inputmode="numeric" /></label>
+        <div class="hint">Trocar device_motion recarrega a página.</div>
+      </details>
+    </div>
+
+    <script type="module" src="/src/controller/main.ts"></script>
+  </body>
+</html>
