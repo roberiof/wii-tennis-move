@@ -2,6 +2,7 @@
 
 - **Status:** aceita (conceito). Detalhes de detecção condicionados ao POC 01.
 - **Registrada em:** 2026-10-12
+- **Atualizada em:** 2026-11-06 — a leitura do lado foi revista no [ADR 0004](0004-lado-por-moldes-da-calibracao.md) (moldes da calibração em vez do sentido da rotação).
 
 ## Contexto
 

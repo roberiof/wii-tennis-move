@@ -48,14 +48,6 @@
         border-radius: 16px;
         display: inline-block;
       }
-      .racket-area {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        flex: 1;
-        width: 100%;
-      }
       .racket-glow {
         width: 200px;
         height: 200px;
@@ -73,14 +65,12 @@
         transition: transform 0.2s ease;
       }
       .instruction {
-        margin-top: 24px;
         font-size: 19px;
         font-weight: 800;
         text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         text-align: center;
       }
       .last-swing {
-        margin-top: 8px;
         font-size: 15px;
         font-weight: 700;
         opacity: 0.9;
@@ -92,7 +82,6 @@
         height: 12px;
         background: rgba(0, 40, 80, 0.25);
         border-radius: 6px;
-        margin-top: 14px;
         overflow: hidden;
         border: 1px solid rgba(255, 255, 255, 0.4);
       }
@@ -104,23 +93,89 @@
         transition: width 0.15s ease-out;
         box-shadow: 0 0 12px #ffffff;
       }
-      .footer {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        margin-bottom: 8px;
-      }
-      .hand-btn {
+      .btn {
         background: rgba(255, 255, 255, 0.28);
         backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.6);
         color: #ffffff;
-        padding: 12px 28px;
+        padding: 14px 28px;
         border-radius: 24px;
-        font-size: 14px;
+        font-size: 16px;
         font-weight: 800;
         box-shadow: 0 8px 20px rgba(0, 60, 120, 0.2);
         cursor: pointer;
+        font-family: inherit;
+      }
+      .btn.small {
+        padding: 10px 20px;
+        font-size: 13px;
+      }
+      .btn.ghost {
+        background: transparent;
+        box-shadow: none;
+        opacity: 0.8;
+      }
+      .view {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+        width: 100%;
+        gap: 14px;
+        text-align: center;
+      }
+      .view.active {
+        display: flex;
+      }
+      .step-count {
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        opacity: 0.85;
+      }
+      .big {
+        font-size: 24px;
+        font-weight: 900;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        max-width: 320px;
+      }
+      .hint {
+        font-size: 15px;
+        font-weight: 600;
+        opacity: 0.9;
+        max-width: 300px;
+        min-height: 20px;
+      }
+      .row {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .menu-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 80%;
+        max-width: 280px;
+      }
+      .ready {
+        font-size: 20px;
+        font-weight: 900;
+        min-height: 26px;
+        opacity: 0.75;
+      }
+      .ready.armed {
+        opacity: 1;
+        color: #fffbd0;
+        text-shadow: 0 0 14px rgba(255, 255, 200, 0.9);
+      }
+      .timing {
+        font-size: 18px;
+        font-weight: 900;
+        min-height: 24px;
       }
     </style>
   </head>
@@ -130,20 +185,74 @@
       <div class="status" id="status-label">Conectando ao PC...</div>
     </div>
 
-    <div class="racket-area">
+    <!-- Calibração: mão → forehand → forte → fraco -->
+    <section class="view" id="view-calib">
+      <div class="step-count" id="calib-count">Calibração · passo 1 de 4</div>
+      <div class="racket-glow" id="calib-glow">
+        <div class="racket-icon">🎾</div>
+      </div>
+      <div class="big" id="calib-title">Você joga com qual mão?</div>
+      <div class="ready" id="calib-ready"></div>
+      <div class="hint" id="calib-registered"></div>
+      <div class="hint" id="calib-hint"></div>
+      <div class="row" id="hand-row">
+        <button class="btn" id="hand-right">Destro</button>
+        <button class="btn" id="hand-left">Canhoto</button>
+      </div>
+      <div class="row">
+        <button class="btn small" id="calib-redo">Refazer</button>
+        <button class="btn small ghost" id="calib-skip">Pular (usar padrão)</button>
+      </div>
+    </section>
+
+    <!-- Menu de modos -->
+    <section class="view" id="view-menu">
+      <div class="big">Escolha o modo</div>
+      <div class="menu-list">
+        <button class="btn" data-mode="wall">Parede</button>
+        <button class="btn" data-mode="targets">Treino com alvos</button>
+        <button class="btn" data-mode="cpu-demo">Rally CPU (demo)</button>
+      </div>
+      <div class="row">
+        <button class="btn small" data-action="test">Testar golpes</button>
+        <button class="btn small ghost" data-action="recalib">Recalibrar</button>
+      </div>
+    </section>
+
+    <!-- Modo de teste: séries de golpes declarados, placar de acertos -->
+    <section class="view" id="view-test">
+      <div class="step-count">Testar golpes</div>
+      <div class="big" id="test-title">Escolha a série</div>
+      <div class="hint" id="test-hint">Toque na série e faça só aquele golpe, parando entre um e outro.</div>
+      <div class="row">
+        <button class="btn" data-stroke="1">Série FOREHAND</button>
+        <button class="btn" data-stroke="-1">Série BACKHAND</button>
+      </div>
+      <div class="ready" id="test-ready"></div>
+      <div class="hint" id="test-fh"></div>
+      <div class="hint" id="test-bh"></div>
+      <div class="row">
+        <button class="btn small" data-action="test-reset">Zerar</button>
+        <button class="btn small ghost" data-action="menu">Menu</button>
+      </div>
+    </section>
+
+    <!-- Jogo -->
+    <section class="view" id="view-play">
       <div class="racket-glow" id="racket-glow">
         <div class="racket-icon" id="racket-icon">🎾</div>
       </div>
-      <div class="instruction">Balançe o celular como raquete</div>
+      <div class="instruction">Balance o celular como raquete</div>
       <div class="last-swing" id="last-swing">Pronto para jogar</div>
       <div class="power-bar-wrap">
         <div class="power-bar-fill" id="power-bar"></div>
       </div>
-    </div>
-
-    <div class="footer">
-      <button class="hand-btn" id="hand-btn">Modo: Destro</button>
-    </div>
+      <div class="timing" id="timing-label"></div>
+      <div class="row">
+        <button class="btn small" data-action="menu">Menu</button>
+        <button class="btn small ghost" data-action="recalib">Recalibrar</button>
+      </div>
+    </section>
 
     <script type="module" src="/src/controller/main.ts"></script>
   </body>

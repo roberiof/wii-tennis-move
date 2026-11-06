@@ -35,9 +35,9 @@ A tela (PC) roda o jogo e decide tudo. Cada celular detecta o próprio swing e e
 ### Fluxo de um golpe
 
 1. O controle recebe `onDeviceMotion` no intervalo configurado.
-2. O detector local encontra o pico de rotação e aceleração e calcula força, efeito e lado.
-3. O controle envia `{ type: "swing", power, effect, side, t }` para a tela, com `t` vindo de `getServerTime()`.
-4. A tela compara `t` com a passagem da bola pela zona do jogador e resolve o acerto com janela generosa.
+2. O detector local encontra o pico de rotação e calcula força e lado (efeito: S6).
+3. O controle envia `{ type: "swing", power, side, peak, calibrated, t, sideMargin }` para a tela, com `t` = instante do pico no relógio do servidor (`getServerTime()`).
+4. A tela compara `t` com o instante em que a bola cruza a linha de contato e resolve o acerto (janela de −350 a +250 ms, S3).
 5. A tela atualiza a física e, no acerto, manda `vibrate` para aquele celular.
 
 ```
@@ -58,7 +58,7 @@ Celular (controller)                         PC (screen)
 
 ### Calibração
 
-Na entrada: um forehand (grava o sentido da rotação) e um swing forte e um fraco (limiares do aparelho).
+Na entrada: mão, 3 forehands e 3 backhands (moldes do lado), um swing forte e um fraco (limiares do aparelho). Detalhes em [`01-game-design.md`](01-game-design.md#calibração).
 
 ## Cronograma (8 semanas)
 
